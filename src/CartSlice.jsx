@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import store from './store.js';
 
 export const CartSlice = createSlice({
     name: 'cart',
@@ -12,18 +11,22 @@ export const CartSlice = createSlice({
             const existingItem = state.items.find(item => item.name === name);
             if (existingItem) {
                 existingItem.quantity++;
-            } else {
-                state.items.push({ name, image, cost, quantity: 1 });
             }
+            else {
+                state.items.push({ name, image, cost, quantity: 1 });
+
+            }
+
         },
         removeItem: (state, action) => {
-            state.items = state.items.filter(item => item.name !== action.payload);
+            state.items = state.items.filter(item => item.name !== action.payload.name);
+
         },
         updateQuantity: (state, action) => {
             const { name, quantity } = action.payload;
-            const itemToUpdate = state.items.find(item => item.name === name);
-            if (itemToUpdate) {
-                itemToUpdate.quantity = quantity;
+            const existingItem = state.items.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity = quantity;
             }
         },
     },
